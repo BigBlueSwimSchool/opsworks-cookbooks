@@ -5,7 +5,11 @@
  * description of configuration variables and their potential values.
  */
 exports.config = {
+  <% if @environment == 'development' %>
+  agent_enabled: true,
+  <% else %>
   agent_enabled: false,
+  <% end %>
   /**
    * Array of application names.
    */
