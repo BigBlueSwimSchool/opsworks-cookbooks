@@ -11,7 +11,7 @@ node[:deploy].each do |application, deploy|
     owner deploy[:user]
     group deploy[:group]
     variables(
-      :application => deploy[:application].gsub! '_', '-',
+      :application => deploy[:application].gsub('_', '-'),
       :license_key => node[:newrelic][:license],
       :environment => node[:newrelic][:environment],
       :application_type => deploy[:application_type]
