@@ -9,6 +9,7 @@ node[:deploy].each do |application, deploy|
     variables(
       :license_key => node[:newrelic][:license],
       :environment => node[:newrelic][:environment]
+      :application_type => deploy[:application_type]
     )
   end
 
