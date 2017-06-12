@@ -11,6 +11,7 @@ node[:deploy].each do |application, deploy|
     owner deploy[:user]
     group deploy[:group]
     variables(
+      :application => application,
       :license_key => node[:newrelic][:license],
       :environment => node[:newrelic][:environment],
       :application_type => deploy[:application_type]
