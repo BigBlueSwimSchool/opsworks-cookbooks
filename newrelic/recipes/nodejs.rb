@@ -4,7 +4,7 @@ node[:deploy].each do |application, deploy|
     next
   end
 
-  template "#{deploy[:deploy_to]}/newrelic.js" do
+  template "#{deploy[:deploy_to]}/shared/config/newrelic.js" do
     cookbook 'newrelic'
     source 'newrelic.js.erb'
     mode '0660'
