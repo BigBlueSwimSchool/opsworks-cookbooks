@@ -11,10 +11,17 @@ node[:deploy].each do |application, deploy|
     owner deploy[:user]
     group deploy[:group]
     variables(
-      :application => application,
+      :application => deploy[:application],
       :license_key => node[:newrelic][:license],
       :environment => node[:newrelic][:environment],
       :application_type => deploy[:application_type]
     )
   end
+
+  link "#{deploy[:deploy_to]}/current/newrelic.js" do
+    action :create
+    link_type :symbolic
+    to "#{deploy[:deploy_to]}/shared/config/newrelic.js"
+  end
+
 end
