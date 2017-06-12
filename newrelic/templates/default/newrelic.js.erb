@@ -5,7 +5,7 @@
  * description of configuration variables and their potential values.
  */
 exports.config = {
-  <% if @environment == 'development' %>
+  <% if @environment == 'production' %>
   agent_enabled: true,
   <% else %>
   agent_enabled: false,

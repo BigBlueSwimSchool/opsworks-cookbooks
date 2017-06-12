@@ -3,6 +3,10 @@ node[:deploy].each do |application, deploy|
     Chef::Log.debug("Skipping deploy::nodejs application #{application} as it is not a node.js app")
     next
   end
+  
+  Chef::Log.debug("Deploying newrelic.js")
+  
+  Chef::Log.debug("#{deploy}")
 
   template "#{deploy[:deploy_to]}/shared/config/newrelic.js" do
     cookbook 'newrelic'
