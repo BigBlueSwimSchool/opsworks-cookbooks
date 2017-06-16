@@ -20,7 +20,7 @@ define :opsworks_nodejs do
     group deploy[:group]
     variables(
       :database => deploy[:database], 
-      :memcached => deploy[:memcached], 
+      :memcached => node[:memcached], 
       :layers => node[:opsworks][:layers],
       :services => node[:services],
       :models => node[:models],
