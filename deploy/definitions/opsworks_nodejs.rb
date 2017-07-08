@@ -2,10 +2,6 @@ define :opsworks_nodejs do
   deploy = params[:deploy_data]
   application = params[:app]
 
-  service 'monit' do
-    action :nothing
-  end
-
   node[:dependencies][:npms].each do |npm, version|
     execute "/usr/local/bin/npm install #{npm}" do
       cwd "#{deploy[:deploy_to]}/current"
