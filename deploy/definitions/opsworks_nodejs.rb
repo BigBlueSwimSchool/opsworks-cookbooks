@@ -38,30 +38,24 @@ define :opsworks_nodejs do
     )
   end
 
-  file "#{deploy[:deploy_to]}/shared/config/ssl.crt" do
+  template "#{deploy[:deploy_to]}/shared/config/newrelic.js" do
+    cookbook 'newrelic'
+    source 'newrelic.js.erb'
+    mode '0660'
     owner deploy[:user]
-    mode 0600
-    content deploy[:ssl_certificate]
-    only_if do
-      deploy[:ssl_support]
-    end
+    group deploy[:group]
+    variables(
+      :application => deploy[:application].gsub('_', '-'),
+      :license_key => node[:newrelic][:license],
+      :environment => node[:newrelic][:environment],
+      :application_type => deploy[:application_type]
+    )
   end
 
-  file "#{deploy[:deploy_to]}/shared/config/ssl.key" do
-    owner deploy[:user]
-    mode 0600
-    content deploy[:ssl_certificate_key]
-    only_if do
-      deploy[:ssl_support]
-    end
+  link "#{deploy[:deploy_to]}/current/newrelic.js" do
+    action :create
+    link_type :symbolic
+    to "#{deploy[:deploy_to]}/shared/config/newrelic.js"
   end
 
-  file "#{deploy[:deploy_to]}/shared/config/ssl.ca" do
-    owner deploy[:user]
-    mode 0600
-    content deploy[:ssl_certificate_ca]
-    only_if do
-      deploy[:ssl_support] && deploy[:ssl_certificate_ca].present?
-    end
-  end
 end
