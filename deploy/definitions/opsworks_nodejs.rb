@@ -29,8 +29,8 @@ define :opsworks_nodejs do
       )
   end
 
-  template "#{node.default[:monit][:conf_dir]}/node_web_app-#{application}.monitrc" do
-    source 'node_web_app.monitrc.erb'
+  template "/etc/init.d/#{application}" do
+    source 'node_web_app.init.d.erb'
     cookbook 'opsworks_nodejs'
     owner 'root'
     group 'root'
@@ -40,8 +40,20 @@ define :opsworks_nodejs do
       :application_name => application,
       :monitored_script => "#{deploy[:deploy_to]}/current/server.js"
     )
-    notifies :restart, "service[monit]", :immediately
   end
+  # template "#{node.default[:monit][:conf_dir]}/node_web_app-#{application}.monitrc" do
+  #   source 'node_web_app.monitrc.erb'
+  #   cookbook 'opsworks_nodejs'
+  #   owner 'root'
+  #   group 'root'
+  #   mode '0644'
+  #   variables(
+  #     :deploy => deploy,
+  #     :application_name => application,
+  #     :monitored_script => "#{deploy[:deploy_to]}/current/server.js"
+  #   )
+  #   notifies :restart, "service[monit]", :immediately
+  # end
 
   file "#{deploy[:deploy_to]}/shared/config/ssl.crt" do
     owner deploy[:user]
