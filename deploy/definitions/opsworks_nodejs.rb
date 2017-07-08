@@ -34,7 +34,7 @@ define :opsworks_nodejs do
     cookbook 'opsworks_nodejs'
     owner 'root'
     group 'root'
-    mode '0644'
+    mode '0755'
     variables(
       :deploy => deploy,
       :application_name => application,
