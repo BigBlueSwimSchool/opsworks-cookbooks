@@ -3,15 +3,12 @@
 
 . /etc/init.d/functions
 
-NAME=app-service
-SOURCE_DIR=/var/www/api/$NAME/
-SOURCE_FILE=server.js
-SOCK_FILE=/var/run/node/app.sock
-APP=$SOURCE_DIR$SOURCE_FILE
+NAME=<%= @application_name %>
+SOCK_FILE=/var/run/<%= @application_name %>.sock
+APP=<%= @monitored_script %>
 
 user=root
 pidfile=/var/run/$NAME.pid
-logfile=/var/log/$NAME-forever.log
 forever_dir=/var/run/forever
 forever=forever
 
@@ -25,7 +22,7 @@ start() {
   chown $user $pidfile
 
   # Launch the application
-  su - $user -c "$forever start -p $forever_dir --pidFile $pidfile -l $logfile -a -d $APP $ARGS 2>&1 >/dev/null"
+  su - $user -c "$forever start -p $forever_dir --pidFile $pidfile -e <%= @deploy[:deploy_to]%>/shared/log/node.stderr.log -o <%= @deploy[:deploy_to]%>/shared/log/node.stdout.log -a -d $APP $ARGS 2>&1 >/dev/null"
   ret=$?
 
     if [ $ret -eq 0 ]; then
