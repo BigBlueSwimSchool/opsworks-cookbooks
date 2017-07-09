@@ -2,10 +2,6 @@ define :opsworks_nodejs do
   deploy = params[:deploy_data]
   application = params[:app]
 
-  service 'monit' do
-    action :nothing
-  end
-
   node[:dependencies][:npms].each do |npm, version|
     execute "/usr/local/bin/npm install #{npm}" do
       cwd "#{deploy[:deploy_to]}/current"
@@ -29,44 +25,37 @@ define :opsworks_nodejs do
       )
   end
 
-  template "#{node.default[:monit][:conf_dir]}/node_web_app-#{application}.monitrc" do
-    source 'node_web_app.monitrc.erb'
+  template "/etc/init.d/#{application}" do
+    source 'node_web_app.init.d.erb'
     cookbook 'opsworks_nodejs'
     owner 'root'
     group 'root'
-    mode '0644'
+    mode '0755'
     variables(
       :deploy => deploy,
       :application_name => application,
       :monitored_script => "#{deploy[:deploy_to]}/current/server.js"
     )
-    notifies :restart, "service[monit]", :immediately
   end
 
-  file "#{deploy[:deploy_to]}/shared/config/ssl.crt" do
+  template "#{deploy[:deploy_to]}/shared/config/newrelic.js" do
+    cookbook 'newrelic'
+    source 'newrelic.js.erb'
+    mode '0660'
     owner deploy[:user]
-    mode 0600
-    content deploy[:ssl_certificate]
-    only_if do
-      deploy[:ssl_support]
-    end
+    group deploy[:group]
+    variables(
+      :application => deploy[:application].gsub('_', '-'),
+      :license_key => node[:newrelic][:license],
+      :environment => node[:newrelic][:environment],
+      :application_type => deploy[:application_type]
+    )
   end
 
-  file "#{deploy[:deploy_to]}/shared/config/ssl.key" do
-    owner deploy[:user]
-    mode 0600
-    content deploy[:ssl_certificate_key]
-    only_if do
-      deploy[:ssl_support]
-    end
+  link "#{deploy[:deploy_to]}/current/newrelic.js" do
+    action :create
+    link_type :symbolic
+    to "#{deploy[:deploy_to]}/shared/config/newrelic.js"
   end
 
-  file "#{deploy[:deploy_to]}/shared/config/ssl.ca" do
-    owner deploy[:user]
-    mode 0600
-    content deploy[:ssl_certificate_ca]
-    only_if do
-      deploy[:ssl_support] && deploy[:ssl_certificate_ca].present?
-    end
-  end
 end

@@ -37,4 +37,10 @@ else
     notifies :write, "log[downloading]", :immediately
     action :install
   end
+
+  execute "install forever" do
+    Chef::Log.debug("nodejs:installing forever")
+    command "npm install -g forever"
+  end
+  
 end
