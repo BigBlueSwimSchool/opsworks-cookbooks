@@ -29,13 +29,19 @@ else
     action :nothing
   end
 
-  opsworks_commons_assets_installer "Install user space OpsWorks NodeJS package" do
-    asset PACKAGE_BASENAME
-    version node[:opsworks_nodejs][:version]
-    release node[:opsworks_nodejs][:pkgrelease]
+  execute "install nvm" do
+    Chef::Log.debug("install nvm")
+    command "curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.32.0/install.sh | bash"
+  end
 
-    notifies :write, "log[downloading]", :immediately
-    action :install
+  execute "setup nvm" do
+    Chef::Log.debug("setup nvm")
+    command ". ~/.nvm/nvm.sh"
+  end
+
+  execute "install nodejs" do
+    Chef::Log.debug("install nodejs")
+    command "nvm install 6.11.1"
   end
 
   execute "install forever" do
