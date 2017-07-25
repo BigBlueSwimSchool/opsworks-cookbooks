@@ -22,18 +22,6 @@ else
     end
   end
 
-  log "downloading" do
-    message "Download and install NodeJS version #{node[:opsworks_nodejs][:full_version]} patch #{node[:opsworks_nodejs][:patch]} release #{node[:opsworks_nodejs][:pkgrelease]}"
-    level :info
-
-    action :nothing
-  end
-
-  # execute "install nvm" do
-  #   Chef::Log.debug("install nvm")
-  #   command "curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.32.0/install.sh | bash"
-  # end
-
   script "Install NVM" do
     interpreter "bash"
     user "root"
@@ -42,14 +30,8 @@ else
       source ~/.bashrc
       nvm install 6.11.1
       n=$(which node);n=${n%/bin/node}; chmod -R 755 $n/bin/*; sudo cp -r $n/{bin,lib,share} /usr/local
-      n=$(which npm);n=${n%/bin/npm}; chmod -R 755 $n/bin/*; sudo cp -r $n/{bin,lib,share} /usr/local
     EOH
   end
-
-  # execute "install nodejs" do
-  #   Chef::Log.debug("install nodejs")
-  #   command "nvm install 6.11.1"
-  # end
 
   execute "install forever" do
     Chef::Log.debug("nodejs:installing forever")
