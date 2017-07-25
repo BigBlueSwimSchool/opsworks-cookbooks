@@ -34,14 +34,19 @@ else
     command "curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.32.0/install.sh | bash"
   end
 
-  execute "setup nvm" do
-    Chef::Log.debug("setup nvm")
-    command "source ~/.bashrc"
+  execute "setup nvm 1" do
+    Chef::Log.debug("setup nvm 1")
+    command "export NVM_DIR=\"/root/.nvm\""
+  end
+
+  execute "setup nvm 2" do
+    Chef::Log.debug("setup nvm 2")
+    command "[ -s \"$NVM_DIR/nvm.sh\" ] && . \"$NVM_DIR/nvm.sh\""
   end
 
   execute "install nodejs" do
     Chef::Log.debug("install nodejs")
-    command "/root/.nvm/nvm.sh install 6.11.1"
+    command "nvm install 6.11.1"
   end
 
   execute "install forever" do
