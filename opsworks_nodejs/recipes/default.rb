@@ -22,20 +22,15 @@ else
     end
   end
 
-  log "downloading" do
-    message "Download and install NodeJS version #{node[:opsworks_nodejs][:full_version]} patch #{node[:opsworks_nodejs][:patch]} release #{node[:opsworks_nodejs][:pkgrelease]}"
-    level :info
-
-    action :nothing
-  end
-
-  opsworks_commons_assets_installer "Install user space OpsWorks NodeJS package" do
-    asset PACKAGE_BASENAME
-    version node[:opsworks_nodejs][:version]
-    release node[:opsworks_nodejs][:pkgrelease]
-
-    notifies :write, "log[downloading]", :immediately
-    action :install
+  script "Install NVM" do
+    interpreter "bash"
+    user "root"
+    code <<-EOH
+      curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.32.0/install.sh | bash
+      source ~/.bashrc
+      nvm install 6.11.1
+      n=$(which node);n=${n%/bin/node}; chmod -R 755 $n/bin/*; sudo cp -r $n/{bin,lib,share} /usr/local
+    EOH
   end
 
   execute "install forever" do
