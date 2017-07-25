@@ -36,7 +36,7 @@ else
 
   execute "setup nvm" do
     Chef::Log.debug("setup nvm")
-    command ". ~/.nvm/nvm.sh"
+    command "source ~/.bashrc"
   end
 
   execute "install nodejs" do
