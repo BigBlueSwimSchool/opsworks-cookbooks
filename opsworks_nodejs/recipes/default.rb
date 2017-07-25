@@ -41,7 +41,7 @@ else
 
   execute "install nodejs" do
     Chef::Log.debug("install nodejs")
-    command "nvm install 6.11.1"
+    command "/root/.nvm/nvm.sh install 6.11.1"
   end
 
   execute "install forever" do
