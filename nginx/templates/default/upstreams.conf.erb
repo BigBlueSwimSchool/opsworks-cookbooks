@@ -5,3 +5,11 @@ upstream <%= serviceName %> {
 }
 
 <% end %>
+
+<% node['deploy'].each do |application, deploy| -%>
+
+# upstream <%= application %> {
+#    server /var/run/<%= application %>.sock
+#}
+
+<% end %>
