@@ -1,5 +1,5 @@
 <% node['deploy'].each do |application, deploy| -%>
 upstream <%= application %> {
-    server unix:/var/run/<%= application %>.sock
+    server unix:/var/run/<%= application %>.sock;
 }
 <% end %>
