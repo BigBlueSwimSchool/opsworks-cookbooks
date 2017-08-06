@@ -1,15 +1,5 @@
-<% node['services'].each do |serviceName, service| -%>
-
-upstream <%= serviceName %> {
-	server <%= service.socket %>;
-}
-
-<% end %>
-
 <% node['deploy'].each do |application, deploy| -%>
-
-# upstream <%= application %> {
-#    server /var/run/<%= application %>.sock
-#}
-
+upstream <%= application %> {
+    server unix:/var/run/<%= application %>.sock
+}
 <% end %>
