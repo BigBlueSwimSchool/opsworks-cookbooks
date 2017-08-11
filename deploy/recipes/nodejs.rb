@@ -36,4 +36,9 @@ node[:deploy].each do |application, deploy|
       $? == 0
     end
   end
+
+  service "nginx" do
+    action :reload
+  end
+  
 end

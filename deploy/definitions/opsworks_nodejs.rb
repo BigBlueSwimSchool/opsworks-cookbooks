@@ -46,6 +46,7 @@ define :opsworks_nodejs do
     mode 0644
     variables(
       :application_name => application
+      :route => deploy[:environment][:route]
     )
   end
 
