@@ -38,6 +38,17 @@ define :opsworks_nodejs do
     )
   end
 
+  template "#{node[:nginx][:dir]}/conf.d/#{application}.conf" do
+    cookbook 'nginx'
+    source 'app.conf.erb'
+    owner "root"
+    group "root"
+    mode 0644
+    variables(
+      :application_name => application
+    )
+  end
+
   template "#{deploy[:deploy_to]}/shared/config/newrelic.js" do
     cookbook 'newrelic'
     source 'newrelic.js.erb'

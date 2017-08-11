@@ -29,17 +29,6 @@ node[:deploy].each do |application, deploy|
     environment_variables deploy[:environment_variables]
   end
 
-  template "#{node[:nginx][:dir]}/conf.d/#{application}.conf" do
-    cookbook 'nginx'
-    source 'app.conf.erb'
-    owner "root"
-    group "root"
-    mode 0644
-    variables(
-      :application => application
-    )
-  end
-
   ruby_block "restart node.js application #{application}" do
     block do
       Chef::Log.info("restart node.js via: #{node[:deploy][application][:nodejs][:restart_command]}")
