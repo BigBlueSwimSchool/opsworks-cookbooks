@@ -5,7 +5,7 @@
 
 NAME=<%= @application_name %>
 SOCK_FILE=/var/run/<%= @application_name %>.sock
-APP=<%= @monitored_script %>
+APP=<%= @deploy[:deploy_to]%>/current/server.js
 
 user=root
 pidfile=/var/run/$NAME.pid

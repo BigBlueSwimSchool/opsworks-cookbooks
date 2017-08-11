@@ -33,8 +33,7 @@ define :opsworks_nodejs do
     mode '0755'
     variables(
       :deploy => deploy,
-      :application_name => application,
-      :monitored_script => "#{deploy[:deploy_to]}/current/server.js"
+      :application_name => application
     )
   end
 
@@ -45,7 +44,7 @@ define :opsworks_nodejs do
     group "root"
     mode 0644
     variables(
-      :application_name => application
+      :application_name => application,
       :route => deploy[:environment][:route]
     )
   end
