@@ -4,25 +4,4 @@ server {
 
     include /etc/nginx/app.d/*.conf;
 
-    <% node['deploy'].each do |application, deploy| -%>
-    location <%= deploy.environment.route %> {
-        if ($request_method = 'OPTIONS') {
-            add_header 'Access-Control-Allow-Origin' '*';
-            add_header 'Access-Control-Allow-Methods' 'DELETE,GET,HEAD,OPTIONS,POST,PUT';
-            add_header 'Access-Control-Allow-Headers' 'Accepts,Content-Type,Authorization,X-Access-Token';
-            add_header 'Access-Control-Max-Age' 1728000;
-            add_header 'Content-Type' 'text/plain; charset=utf-8';
-            add_header 'Content-Length' 0;
-            return 204;
-        }
-        proxy_pass http://<%= application %>;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        add_header 'Access-Control-Allow-Origin' * always;
-        add_header 'Access-Control-Allow-Methods' 'DELETE,GET,HEAD,OPTIONS,POST,PUT';
-        add_header 'Access-Control-Allow-Headers' 'Accepts,Content-Type,Authorization,X-Access-Token';
-    }
-
-    <% end %>
 }
