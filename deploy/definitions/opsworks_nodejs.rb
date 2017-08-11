@@ -33,8 +33,30 @@ define :opsworks_nodejs do
     mode '0755'
     variables(
       :deploy => deploy,
+      :application_name => application
+    )
+  end
+
+  template "#{node[:nginx][:dir]}/conf.d/#{application}.conf" do
+    cookbook 'nginx'
+    source 'upstream.conf.erb'
+    owner "root"
+    group "root"
+    mode 0644
+    variables(
+      :application_name => application
+    )
+  end
+
+  template "#{node[:nginx][:dir]}/app.d/#{application}.conf" do
+    cookbook 'nginx'
+    source 'app.conf.erb'
+    owner "root"
+    group "root"
+    mode 0644
+    variables(
       :application_name => application,
-      :monitored_script => "#{deploy[:deploy_to]}/current/server.js"
+      :route => deploy[:environment][:route]
     )
   end
 

@@ -35,5 +35,9 @@ node[:deploy].each do |application, deploy|
       Chef::Log.info(`#{node[:deploy][application][:nodejs][:restart_command]}`)
       $? == 0
     end
-  end
+  end  
+end
+
+service "nginx" do
+  action :restart
 end
