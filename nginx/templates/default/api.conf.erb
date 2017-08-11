@@ -2,6 +2,8 @@ server {
     listen   80;
     server_name _;
 
+    include /etc/nginx/app.d/*.conf;
+
     <% node['deploy'].each do |application, deploy| -%>
     location <%= deploy.environment.route %> {
         if ($request_method = 'OPTIONS') {

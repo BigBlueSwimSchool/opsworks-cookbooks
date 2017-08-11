@@ -39,6 +39,17 @@ define :opsworks_nodejs do
 
   template "#{node[:nginx][:dir]}/conf.d/#{application}.conf" do
     cookbook 'nginx'
+    source 'upstream.conf.erb'
+    owner "root"
+    group "root"
+    mode 0644
+    variables(
+      :application_name => application
+    )
+  end
+
+  template "#{node[:nginx][:dir]}/app.d/#{application}.conf" do
+    cookbook 'nginx'
     source 'app.conf.erb'
     owner "root"
     group "root"
