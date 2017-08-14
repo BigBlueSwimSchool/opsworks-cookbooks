@@ -14,10 +14,24 @@ node[:deploy].each do |application, deploy|
     end
   end
 
-  file "#{node[:monit][:conf_dir]}/node_web_app-#{application}.monitrc" do
+  file "/etc/init.d/#{application}" do
     action :delete
     only_if do
-      ::File.exists?("#{node[:monit][:conf_dir]}/node_web_app-#{application}.monitrc")
+      ::File.exists?("/etc/init.d/#{application}")
+    end
+  end
+
+  file "#{node[:nginx][:dir]}/conf.d/#{application}.conf" do
+    action :delete
+    only_if do
+      ::File.exists?("#{node[:nginx][:dir]}/conf.d/#{application}.conf")
+    end
+  end
+
+  file "#{node[:nginx][:dir]}/app.d/#{application}.conf" do
+    action :delete
+    only_if do
+      ::File.exists?("#{node[:nginx][:dir]}/app.d/#{application}.conf")
     end
   end
 
@@ -29,4 +43,8 @@ node[:deploy].each do |application, deploy|
       ::File.exists?("#{deploy[:deploy_to]}")
     end
   end
+end
+
+service "nginx" do
+  action :restart
 end
