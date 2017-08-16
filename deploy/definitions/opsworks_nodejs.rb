@@ -7,7 +7,7 @@ define :opsworks_nodejs do
       cwd "#{deploy[:deploy_to]}/current"
     end
   end
-
+  
   template "#{deploy[:deploy_to]}/shared/config/opsworks.js" do
     cookbook 'opsworks_nodejs'
     source 'opsworks.js.erb'
@@ -58,6 +58,23 @@ define :opsworks_nodejs do
       :application_name => application,
       :route => deploy[:environment][:route]
     )
+  end
+
+  template "#{deploy[:deploy_to]}/shared/config/env.js" do
+    cookbook 'opsworks_nodejs'
+    source 'env.js.erb'
+    mode '0660'
+    owner deploy[:user]
+    group deploy[:group]
+    variables(
+      :environment => deploy[:environment]
+      )
+  end
+
+  link "#{deploy[:deploy_to]}/current/env.js" do
+    action :create
+    link_type :symbolic
+    to "#{deploy[:deploy_to]}/shared/config/env.js"
   end
 
   template "#{deploy[:deploy_to]}/shared/config/newrelic.js" do

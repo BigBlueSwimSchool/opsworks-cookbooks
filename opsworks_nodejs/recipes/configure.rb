@@ -20,4 +20,16 @@ node[:deploy].each do |application, deploy|
       :elasticsearch => node[:elasticsearch]
     )
   end
+
+  template "#{deploy[:deploy_to]}/shared/config/env.js" do
+    cookbook 'opsworks_nodejs'
+    source 'env.js.erb'
+    mode '0660'
+    owner deploy[:user]
+    group deploy[:group]
+    variables(
+      :environment => deploy[:environment]
+      )
+  end
+  
 end
