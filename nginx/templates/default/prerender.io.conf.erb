@@ -2,6 +2,12 @@ server {
     listen 80 default_server;
     server_name <%= @server_name %>;
 
+    <% @locations.each do |key, location| %>
+    location <%= location.path %> {
+        <%= location.action %>;
+    }
+    <% end %>
+
     location / {
         proxy_set_header X-Prerender-Token <%= @prerender.token %>;
 
@@ -26,7 +32,7 @@ server {
 
             #setting prerender as a variable forces DNS resolution since nginx caches IPs and doesnt play well with load balancing
             set $prerender "service.prerender.io";
-            rewrite .* /<%= @client_protocol %><%= @server_name %>$request_uri? break;
+            rewrite .* /<%= @client_protocol %>://<%= @server_name %>$request_uri? break;
             proxy_pass http://$prerender;
         }
 
