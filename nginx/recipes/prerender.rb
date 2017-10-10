@@ -8,7 +8,7 @@ template "#{node[:nginx][:dir]}/conf.d/prerender.io.conf" do
     :server_name => node[:server_name],
     :client_protocol => node[:client_protocol],
     :prerender => node[:prerender],
-    :proxy => node[:proxy]
+    :proxy => node[:proxy],
     :locations => node[:locations]
   )
 end
