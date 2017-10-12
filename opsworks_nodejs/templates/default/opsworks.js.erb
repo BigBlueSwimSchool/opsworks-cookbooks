@@ -5,6 +5,5 @@ exports.services = <%= @services.to_json %>
 exports.models = <%= @models.to_json %>
 exports.aws = <%= @aws.to_json %>
 exports.elasticsearch = <%= @elasticsearch.to_json %>
-exports.memcached = <%= @memcached.to_json %>
 exports.layers = function() { return Object.keys(stack_map); };
 exports.hosts = function(layer) { return stack_map[layer]; };
