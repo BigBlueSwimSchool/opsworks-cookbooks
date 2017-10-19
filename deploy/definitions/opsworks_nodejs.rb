@@ -46,6 +46,7 @@ define :opsworks_nodejs do
     variables(
       :application_name => application
     )
+    only_if { deploy[:environment][:route] }
   end
 
   template "#{node[:nginx][:dir]}/app.d/#{application}.conf" do
@@ -58,6 +59,7 @@ define :opsworks_nodejs do
       :application_name => application,
       :route => deploy[:environment][:route]
     )
+    only_if { deploy[:environment][:route] }
   end
 
   template "#{deploy[:deploy_to]}/shared/config/env.js" do
