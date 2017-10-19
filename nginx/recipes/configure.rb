@@ -15,7 +15,7 @@ node[:deploy].each do |application, deploy|
     variables(
       :application_name => application
     )
-    not_if { deploy[:environment][:route] == nil }
+    only_if { deploy[:environment][:route] }
   end
 
   template "#{node[:nginx][:dir]}/app.d/#{application}.conf" do
@@ -27,7 +27,7 @@ node[:deploy].each do |application, deploy|
       :application_name => application,
       :route => deploy[:environment][:route]
     )
-    not_if { deploy[:environment][:route] == nil }
+    only_if { deploy[:environment][:route] }
   end
 end
 
