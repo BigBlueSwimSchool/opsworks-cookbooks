@@ -1,10 +1,3 @@
-directory "#{node[:nginx][:dir]}/app.d/" do
-  owner "root"
-  group "root"
-  mode 0755
-  not_if { File.exist?("#{node[:nginx][:dir]}/app.d/") }
-end
-
 define :opsworks_nodejs do
   deploy = params[:deploy_data]
   application = params[:app]
@@ -56,6 +49,13 @@ define :opsworks_nodejs do
     only_if { deploy[:environment][:route] }
   end
 
+  directory "#{node[:nginx][:dir]}/app.d/" do
+    owner "root"
+    group "root"
+    mode 0755
+    not_if { File.exist?("#{node[:nginx][:dir]}/app.d/") }
+  end
+  
   template "#{node[:nginx][:dir]}/app.d/#{application}.conf" do
     cookbook 'nginx'
     source 'app.conf.erb'
