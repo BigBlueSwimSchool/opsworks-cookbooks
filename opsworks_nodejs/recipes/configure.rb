@@ -11,7 +11,8 @@ node[:deploy].each do |application, deploy|
     owner deploy[:user]
     group deploy[:group]
     variables(
-      :database => deploy[:database], 
+      :database => deploy[:database],
+      :db_cluster => node[:db_cluster],
       :memcached => node[:memcached], 
       :layers => node[:opsworks][:layers],
       :services => node[:services],
