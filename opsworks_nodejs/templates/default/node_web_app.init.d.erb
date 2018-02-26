@@ -20,7 +20,7 @@ start() {
   chown $user $pidfile
 
   # Launch the application
-  su - $user -c "$forever start -p $forever_dir --workingDir <%= @deploy[:deploy_to]%>/current --pidFile $pidfile -l <%= @deploy[:deploy_to]%>/shared/log/node.forever.log -e <%= @deploy[:deploy_to]%>/shared/log/node.stderr.log -o <%= @deploy[:deploy_to]%>/shared/log/node.stdout.log -a -d $APP -w 4 -s $SOCK_FILE 2>&1 >/dev/null"
+  su - $user -c "$forever start -p $forever_dir --workingDir <%= @deploy[:deploy_to]%>/current --pidFile $pidfile -l <%= @deploy[:deploy_to]%>/shared/log/node.forever.log -e <%= @deploy[:deploy_to]%>/shared/log/node.stderr.log -o <%= @deploy[:deploy_to]%>/shared/log/node.stdout.log -a -d $APP -w 3 -s $SOCK_FILE 2>&1 >/dev/null"
   ret=$?
 
     if [ $ret -eq 0 ]; then
