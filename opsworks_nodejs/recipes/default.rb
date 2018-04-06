@@ -28,7 +28,7 @@ else
     code <<-EOH
       curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.32.0/install.sh | bash
       source ~/.bashrc
-      nvm install 6.11.1
+      nvm install 9.11.1
       n=$(which node);n=${n%/bin/node}; chmod -R 755 $n/bin/*; sudo cp -r $n/{bin,lib,share} /usr/local
     EOH
   end
