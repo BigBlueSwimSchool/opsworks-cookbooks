@@ -13,6 +13,9 @@ server {
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header Host $host;
         proxy_pass http://socketio;
+        add_header 'Access-Control-Allow-Origin' * always;
+        add_header 'Access-Control-Allow-Methods' 'DELETE,GET,HEAD,OPTIONS,POST,PUT';
+        add_header 'Access-Control-Allow-Headers' 'Accepts,Content-Type,Authorization,X-Access-Token';
     }
 
     include /etc/nginx/app.d/*.conf;
