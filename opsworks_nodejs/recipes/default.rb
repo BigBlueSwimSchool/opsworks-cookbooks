@@ -42,7 +42,7 @@ else
 
     execute "install NPM_TOKEN" do
       Chef::Log.debug("nodejs:install NPM_TOKEN")
-      command "set NPM_TOKEN #{deploy[application][:environment_variables][:npm_token]}"
+      command "set NPM_TOKEN #{deploy[:environment_variables][:npm_token]}"
     end
 
   end
