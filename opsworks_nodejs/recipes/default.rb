@@ -38,9 +38,13 @@ else
     command "npm install -g forever"
   end
 
-  execute "install NPM_TOKEN" do
-    Chef::Log.debug("nodejs:install NPM_TOKEN")
-    command "set NPM_TOKEN #{node[:deploy][:environment_variables][:npm_token]}"
+  node[:deploy].each do |application, deploy|
+
+    execute "install NPM_TOKEN" do
+      Chef::Log.debug("nodejs:install NPM_TOKEN")
+      command "set NPM_TOKEN #{deploy[application][:environment_variables][:npm_token]}"
+    end
+
   end
   
 end
