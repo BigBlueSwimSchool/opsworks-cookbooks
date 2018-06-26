@@ -40,9 +40,9 @@ else
 
   node[:deploy].each do |application, deploy|
 
-    execute "set npm authToken #{deploy[:environment_variables][:npm_token]}" do
+    execute "set npm authToken" do
       Chef::Log.debug("nodejs:set npm authToken")
-      command "npm config set //registry.npmjs.org/:_authToken #{deploy[:environment_variables][:npm_token]}"
+      command "npm config set //registry.npmjs.org/:_authToken=#{deploy[:environment_variables][:npm_token]}"
     end
 
   end
