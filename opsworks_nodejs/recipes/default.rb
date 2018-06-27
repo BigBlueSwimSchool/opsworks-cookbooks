@@ -47,14 +47,9 @@ else
 
     execute "set npm authToken" do
       Chef::Log.debug("nodejs:set npm authToken")
-      command "npm config set //registry.npmjs.org/:_authToken=#{deploy[:environment_variables][:npm_token]}"
+      command "echo \"//registry.npmjs.org/:_authToken=#{deploy[:environment_variables][:npm_token]}\" > .npmrc"
     end
 
   end
   
-  execute "Debug" do
-    Chef::Log.debug("nodejs:Debug")
-    command "cat .npmrc"
-  end
-
 end
