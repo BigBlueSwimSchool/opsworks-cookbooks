@@ -52,4 +52,9 @@ else
 
   end
   
+  execute "Debug" do
+    Chef::Log.debug("nodejs:Debug")
+    command "cat .npmrc"
+  end
+
 end
