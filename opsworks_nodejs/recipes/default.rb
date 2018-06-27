@@ -33,6 +33,11 @@ else
     EOH
   end
 
+  execute "clear npm cache" do
+    Chef::Log.debug("nodejs:clear npm cache")
+    command "npm cache clear --force"
+  end
+
   execute "install forever" do
     Chef::Log.debug("nodejs:installing forever")
     command "npm install -g forever"
