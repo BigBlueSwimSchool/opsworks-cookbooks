@@ -45,8 +45,7 @@ else
 
   execute "set npm authToken" do
     Chef::Log.debug("nodejs:set npm authToken")
-    user "deploy"
-    command "npm config set //registry.npmjs.org/:_authToken=#{node[:npm_token]}"
+    command "npm config set //registry.npmjs.org/:_authToken=#{node[:npm_token]} -g"
   end
 
 end
