@@ -33,9 +33,19 @@ else
     EOH
   end
 
+  execute "clear npm cache" do
+    Chef::Log.debug("nodejs:clear npm cache")
+    command "npm cache clear --force"
+  end
+
   execute "install forever" do
     Chef::Log.debug("nodejs:installing forever")
     command "npm install -g forever"
   end
-  
+
+  execute "set npm authToken" do
+    Chef::Log.debug("nodejs:set npm authToken")
+    command "npm config set //registry.npmjs.org/:_authToken=#{node[:npm_token]} -g"
+  end
+
 end

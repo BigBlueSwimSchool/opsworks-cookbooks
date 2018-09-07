@@ -5,7 +5,11 @@
 
 NAME=<%= @application_name %>
 SOCK_FILE=/var/run/<%= @application_name %>.sock
-APP=<%= @deploy[:deploy_to]%>/current/server.js
+APP=<%= @deploy[:deploy_to] %>/current/server.js
+if [ ! -f "$APP" ]
+then
+  APP=<%= @deploy[:deploy_to] %>/current/dist/server.js
+fi
 
 user=root
 pidfile=/var/run/$NAME.pid
