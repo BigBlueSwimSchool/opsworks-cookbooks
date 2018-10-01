@@ -32,5 +32,16 @@ node[:deploy].each do |application, deploy|
       :environment => deploy[:environment]
       )
   end
+
+  template "#{deploy[:deploy_to]}/shared/config/.env" do
+    cookbook 'opsworks_nodejs'
+    source 'dotenv.erb'
+    mode '0660'
+    owner deploy[:user]
+    group deploy[:group]
+    variables(
+      :environment => deploy[:environment]
+      )
+  end
   
 end
