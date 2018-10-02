@@ -1,5 +1,7 @@
 <% @global.each do |key, value| %>
-    <%= key %>="<%= value %>"
+<% if (@environment[key] == nil) : %>
+<%= key %>="<%= value %>"
+<% end %>
 <% end %>
 <% @environment.each do |key, value| %>
 <%= key %>="<%= value %>"
