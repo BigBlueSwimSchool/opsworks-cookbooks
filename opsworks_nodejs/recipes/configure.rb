@@ -40,6 +40,7 @@ node[:deploy].each do |application, deploy|
     owner deploy[:user]
     group deploy[:group]
     variables(
+      :global => node[:environment],
       :environment => deploy[:environment]
       )
   end

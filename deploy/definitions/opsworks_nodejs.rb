@@ -94,6 +94,7 @@ define :opsworks_nodejs do
     owner deploy[:user]
     group deploy[:group]
     variables(
+      :global => node[:environment],
       :environment => deploy[:environment]
       )
   end

@@ -1,3 +1,6 @@
+<% @global.each do |key, value| %>
+    <%= key %>="<%= value %>"
+<% end %>
 <% @environment.each do |key, value| %>
 <%= key %>="<%= value %>"
 <% end %>
