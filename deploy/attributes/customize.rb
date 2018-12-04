@@ -10,3 +10,5 @@
 #
 #normal[:opsworks][:deploy_user][:shell] = '/bin/zsh'
 #normal[:opsworks][:deploy_user][:user] = 'deploy'
+
+default[:logrotate][:rotate] = 14
