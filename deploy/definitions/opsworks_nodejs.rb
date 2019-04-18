@@ -130,7 +130,7 @@ define :opsworks_nodejs do
   end
 
   template "#{deploy[:deploy_to]}/shared/config/googleCloud.json" do
-    cookbook 'newrelic'
+    cookbook 'googleCloud'
     source 'googleCloud.json.erb'
     mode '0660'
     owner deploy[:user]
