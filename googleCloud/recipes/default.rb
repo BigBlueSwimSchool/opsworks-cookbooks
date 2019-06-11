@@ -14,7 +14,7 @@ node[:deploy].each do |application, deploy|
       :type => node[:googleCloud][:type],
       :project_id => node[:googleCloud][:project_id],
       :private_key_id => node[:googleCloud][:private_key_id],
-      :private_key => node[:googleCloud][:private_key],
+      :private_key => node[:googleCloud][:private_key].gsub(/(\n)/){|match|"\\\n"},
       :client_email => node[:googleCloud][:client_email],
       :client_id => node[:googleCloud][:client_id],
       :auth_uri => node[:googleCloud][:auth_uri],
