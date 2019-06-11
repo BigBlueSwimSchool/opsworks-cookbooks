@@ -136,16 +136,7 @@ define :opsworks_nodejs do
     owner deploy[:user]
     group deploy[:group]
     variables(
-      :type => node[:googleCloud][:type],
-      :project_id => node[:googleCloud][:project_id],
-      :private_key_id => node[:googleCloud][:private_key_id],
-      :private_key => node[:googleCloud][:private_key],
-      :client_email => node[:googleCloud][:client_email],
-      :client_id => node[:googleCloud][:client_id],
-      :auth_uri => node[:googleCloud][:auth_uri],
-      :token_uri => node[:googleCloud][:token_uri],
-      :auth_provider_x509_cert_url => node[:googleCloud][:auth_provider_x509_cert_url],
-      :client_x509_cert_url => node[:googleCloud][:client_x509_cert_url]
+      :googleCloud => node[:googleCloud]
     )
   end
 
