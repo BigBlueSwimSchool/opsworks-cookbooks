@@ -1,7 +1,3 @@
-DB_HOSTNAME="<%= @db_hostname %>"
-DB_USERNAME="<%= @db_username %>"
-DB_PASSWORD="<%= @db_password %>"
-DB_DATABASE="<%= @db_database %>"
 <% @global.each do |key, value| %>
 <% if @environment[key] == nil %>
 <%= key %>="<%= value %>"

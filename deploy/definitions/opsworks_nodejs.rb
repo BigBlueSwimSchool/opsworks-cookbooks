@@ -94,10 +94,6 @@ define :opsworks_nodejs do
     owner deploy[:user]
     group deploy[:group]
     variables(
-      :db_hostname => deploy[:database][:host],
-      :db_username => deploy[:database][:username],
-      :db_password => deploy[:database][:password],
-      :db_database => deploy[:database][:database],
       :global => node[:environment],
       :environment => deploy[:environment]
       )
