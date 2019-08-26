@@ -19,6 +19,7 @@ depends "mysql"
 depends "opsworks_postgresql"
 depends "opsworks_nodejs"
 depends "newrelic"
+depends "elastic_apm"
 depends "googleCloud"
 depends "opsworks_aws_flow_ruby"
 
