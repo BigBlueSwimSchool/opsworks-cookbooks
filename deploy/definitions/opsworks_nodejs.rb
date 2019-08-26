@@ -129,6 +129,25 @@ define :opsworks_nodejs do
     to "#{deploy[:deploy_to]}/shared/config/newrelic.js"
   end
 
+  template "#{deploy[:deploy_to]}/shared/config/elastic-apm-node.js" do
+    cookbook 'elastic_apm'
+    source 'elastic-apm-node.js.erb'
+    mode '0660'
+    owner deploy[:user]
+    group deploy[:group]
+    variables(
+      :service_name => deploy[:application].gsub('_', '-'),
+      :secret_key => node[:elastic_apm][:secret_key],
+      :server_url => node[:elastic_apm][:server_url]
+    )
+  end
+
+  link "#{deploy[:deploy_to]}/current/elastic-apm-node.js" do
+    action :create
+    link_type :symbolic
+    to "#{deploy[:deploy_to]}/shared/config/elastic-apm-node.js"
+  end
+
   template "#{deploy[:deploy_to]}/shared/config/googleCloud.json" do
     cookbook 'googleCloud'
     source 'googleCloud.json.erb'
