@@ -12,7 +12,7 @@ node[:deploy].each do |application, deploy|
     group deploy[:group]
     variables(
       :service_name => deploy[:application].gsub('_', '-'),
-      :secret_key => node[:elastic_apm][:secret_key],
+      :secret_token => node[:elastic_apm][:secret_token],
       :server_url => node[:elastic_apm][:server_url]
     )
   end
